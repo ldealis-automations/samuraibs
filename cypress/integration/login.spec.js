@@ -27,7 +27,7 @@ describe('validar página de login', ()=>{
                 .should('have.text', `Bem-vindo,${user.name}`)
         })
     })
-    context.only('quando possui usuário com email correto e senha incorreta', ()=>{
+    context('quando possui usuário com email correto e senha incorreta', ()=>{
         const user = {
             name: "Luiz Class",
             email: "luizclass@samuraibs.com",
@@ -44,7 +44,7 @@ describe('validar página de login', ()=>{
                     expect(response.status).to.eq(200)
                 })
         })
-        it('deve efetuar login e acessar o dashboard', ()=>{
+        it('não deve fazer e login e a mensagem de erro deve ser exibida', ()=>{
             const userInvalidPassword = {
                 email: user.email,
                 password: "abc123"
@@ -53,6 +53,20 @@ describe('validar página de login', ()=>{
             loginPage.loginForm(userInvalidPassword)
             loginPage.submit()
             loginPage.toast.shouldHaveText('Ocorreu um erro ao fazer login, verifique suas credenciais.')
+        })
+    })
+    context('usuário com email inválido', ()=>{
+        const user = {
+            name: "Luiz Class",
+            email: "luizclasssamuraibs.com",
+            password: "123456",
+            is_provider: true
+        }
+        it('não deve logar e deve exibir a mensagem de alerta', ()=>{
+            loginPage.go()
+            loginPage.loginForm(user)
+            loginPage.submit()
+            loginPage.alertHaveText('Informe um email válido')
         })
     })
 })

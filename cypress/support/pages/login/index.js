@@ -17,5 +17,9 @@ class LoginPage {
         cy.contains(el.loginButton)
             .click()
     }
+    alertHaveText(expectedText) {
+        cy.contains('.alert-error', expectedText)
+            .should('be.visible')
+    }
 }
 export default new LoginPage()
