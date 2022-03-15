@@ -1,8 +1,10 @@
 import { el } from './elements'
 import toast from '../../components/toast'
+import profile from '../../components/profile'
 class LoginPage {
     constructor() {
         this.toast = toast
+        this.profile = profile
     }
     go() {
         cy.visit('/')
