@@ -2,7 +2,7 @@
 import loginPage from '../support/pages/login'
 
 describe('validar página de login', ()=>{
-    context('quando possui usuário com email e senha válidos', ()=>{
+    context('quando inserir usuário com email e senha válidos', ()=>{
         const user = {
             name: "Luiz Class",
             email: "luizclass@samuraibs.com",
@@ -27,7 +27,7 @@ describe('validar página de login', ()=>{
                 .should('have.text', `Bem-vindo,${user.name}`)
         })
     })
-    context('quando possui usuário com email correto e senha incorreta', ()=>{
+    context('quando inserir usuário com email correto e senha incorreta', ()=>{
         const user = {
             name: "Luiz Class",
             email: "luizclass@samuraibs.com",
@@ -55,7 +55,7 @@ describe('validar página de login', ()=>{
             loginPage.toast.shouldHaveText('Ocorreu um erro ao fazer login, verifique suas credenciais.')
         })
     })
-    context('usuário com email inválido', ()=>{
+    context('quando inserir usuário com email inválido', ()=>{
         const user = {
             name: "Luiz Class",
             email: "luizclasssamuraibs.com",
@@ -67,6 +67,21 @@ describe('validar página de login', ()=>{
             loginPage.loginForm(user)
             loginPage.submit()
             loginPage.alertHaveText('Informe um email válido')
+        })
+    })
+    context('quando não preencher campos email e senha', ()=>{
+        const alertMessages = [
+            'E-mail é obrigatório',
+            'Senha é obrigatória'
+        ]
+        before(()=>{
+            loginPage.go()
+            loginPage.submit()
+        })
+        alertMessages.forEach((alert)=>{
+            it('deve exibir ' + alert.toLowerCase(), ()=>{
+                loginPage.alertHaveText(alert)
+            })
         })
     })
 })
