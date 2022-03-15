@@ -20,7 +20,7 @@ class SignupPage {
         cy.contains(el.signupButton)
             .click()
     }
-    toastHaveTest(expectedText) {
+    toastHaveText(expectedText) {
         cy.get(el.toast)
             .should('be.visible')
             .find('p')
